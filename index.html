@@ -6,25 +6,23 @@
     <title>Chat Widget</title>
     <script src="https://unpkg.com/@buildshipapp/chat-widget@^1" defer></script>
     <style>
-        /* Make sure the chat widget takes available space */
+        /* Basic page setup */
         html, body {
             height: 100%;
             margin: 0;
-            overflow: hidden; /* Avoid double scrollbars */
+            overflow: hidden; /* Prevent double scrollbars */
         }
 
         #chat-container {
-            height: 100vh; /* 100% of the viewport height */
+            height: 100vh; /* Full viewport height */
             display: flex;
             flex-direction: column;
-            justify-content: flex-end; /* Make sure input is at the bottom */
+            justify-content: flex-end; /* Ensure input stays at the bottom */
         }
 
-        /* Adjust layout when keyboard is open */
-        @media (max-width: 768px) {
-            #chat-container {
-                height: calc(100vh - 50px); /* Adjust this value based on the input field's height */
-            }
+        button {
+            padding: 10px;
+            font-size: 16px;
         }
     </style>
 </head>
@@ -35,26 +33,30 @@
     </div>
 
     <script>
-        function adjustScrollForMobile() {
-            const inputField = document.querySelector('[data-buildship-chat-widget-button]'); // Or the specific input field for the chat widget
-            if (inputField) {
-                inputField.addEventListener('focus', () => {
-                    // Wait a moment for the keyboard to open
-                    setTimeout(() => {
-                        inputField.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 300); // Adjust delay if needed
-                });
-            }
+        function adjustContainerHeight() {
+            const chatContainer = document.getElementById('chat-container');
+            const newHeight = window.innerHeight;
+            chatContainer.style.height = `${newHeight}px`; // Adjust the container height to the new viewport height
         }
 
+        window.addEventListener('resize', adjustContainerHeight); // Adjust when the window resizes (e.g., keyboard appears)
+
         window.addEventListener('load', () => {
-            adjustScrollForMobile();
+            adjustContainerHeight(); // Adjust on page load
             
             // Initialize your chat widget
             window.buildShipChatWidget.config.url = "https://dz3l1w.buildship.run/groundwater";
             window.buildShipChatWidget.config.greetingMessage = "Hi Player!!! Imagine you are a new entrant in the development sector placed in a rural Indian village, you have an exciting career ahead. But for that you have to find innovative solutions to challenges you will face in your career. Keep your answers descriptive and not just 2-4 words. When you are ready, type START and press enter.";
             window.buildShipChatWidget.config.closeOnOutsideClick = false;
             window.buildShipChatWidget.config.openOnLoad = true;
+
+            // Scroll input field into view when focused (to prevent it being hidden by the keyboard)
+            const chatButton = document.querySelector('[data-buildship-chat-widget-button]');
+            chatButton.addEventListener('focus', () => {
+                setTimeout(() => {
+                    chatButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 300); // Delay for smooth transition after keyboard opens
+            });
         });
     </script>
 </body>
