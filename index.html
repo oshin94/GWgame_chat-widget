@@ -3,40 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Widget</title>
+    <title>Your Page Title</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
+            font-family: Arial, sans-serif;
+            height: 100vh; /* Full height of the viewport */
+            overflow: hidden; /* Prevent scroll bars */
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Style for the chat widget */
-        .buildship-chat-widget {
-            width: 100%; /* Full width */
-            max-height: 100%; /* Limit maximum height */
-            transition: height 0.3s ease; /* Smooth transition */
+        .chat-container {
+            flex-grow: 1; /* Allow the chat container to take available space */
+            overflow: auto; /* Enable scrolling */
+            padding: 10px; /* Optional padding */
+            box-shadow: 0 0 10px rgba(0,0,0,0.2); /* Optional shadow for aesthetics */
         }
 
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .buildship-chat-widget {
-                height: 50vh; /* 50% of viewport height */
-            }
+        /* Optional: Style the button to be more visible */
+        button[data-buildship-chat-widget-button] {
+            position: fixed;
+            bottom: 20px; /* Position button at the bottom */
+            right: 20px; /* Position button to the right */
+            z-index: 10; /* Ensure button is above other content */
+            background: #007bff; /* Bootstrap primary color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+
+        button[data-buildship-chat-widget-button]:hover {
+            background: #0056b3; /* Darker on hover */
         }
     </style>
 </head>
 <body>
-    <h1>Welcome to Our Chat Widget</h1>
-    <h1>
+    <div class="chat-container">
+        <!-- The chat widget will be injected here -->
+    </div>
 
-        Empty spaces
-        
-    </h1>
-    
     <!-- Button to open the widget -->
-    <button data-buildship-chat-widget-button>Open Chat</button>
+    <button data-buildship-chat-widget-button>hello</button>
 
+    <!-- Include chat widget script -->
     <script src="https://unpkg.com/@buildshipapp/chat-widget@^1" defer></script>
     <script>
         window.addEventListener("load", () => {
