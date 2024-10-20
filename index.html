@@ -18,6 +18,7 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-end; /* Ensure input stays at the bottom */
+            transition: height 0.3s ease; /* Smooth transition when resizing */
         }
 
         button {
@@ -39,7 +40,23 @@
             chatContainer.style.height = `${newHeight}px`; // Adjust the container height to the new viewport height
         }
 
-        window.addEventListener('resize', adjustContainerHeight); // Adjust when the window resizes (e.g., keyboard appears)
+        function handleFocus() {
+            const chatContainer = document.getElementById('chat-container');
+            // Check if the viewport height decreased by more than a certain percentage (indicating the keyboard opened)
+            const originalHeight = window.innerHeight;
+            
+            window.addEventListener('resize', () => {
+                const currentHeight = window.innerHeight;
+
+                if (currentHeight < originalHeight * 0.7) {
+                    // If the viewport height reduces (keyboard open), reduce the chat container height
+                    chatContainer.style.height = `${currentHeight}px`;
+                } else {
+                    // Restore original height when the keyboard is closed
+                    chatContainer.style.height = `100vh`;
+                }
+            });
+        }
 
         window.addEventListener('load', () => {
             adjustContainerHeight(); // Adjust on page load
@@ -50,13 +67,8 @@
             window.buildShipChatWidget.config.closeOnOutsideClick = false;
             window.buildShipChatWidget.config.openOnLoad = true;
 
-            // Scroll input field into view when focused (to prevent it being hidden by the keyboard)
-            const chatButton = document.querySelector('[data-buildship-chat-widget-button]');
-            chatButton.addEventListener('focus', () => {
-                setTimeout(() => {
-                    chatButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }, 300); // Delay for smooth transition after keyboard opens
-            });
+            // Adjust layout when keyboard is visible
+            handleFocus();
         });
     </script>
 </body>
