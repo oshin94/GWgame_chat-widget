@@ -1,56 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Widget Example</title>
-    <style>
-        /* Basic styles for the button and chat widget */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
-        button[data-buildship-chat-widget-button] {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button[data-buildship-chat-widget-button]:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
-<body>
+<script src="https://unpkg.com/@buildshipapp/chat-widget@^1" defer></script>
+<script>
+    window.addEventListener("load", () => {
+        // Configuring the chat widget
+        window.buildShipChatWidget.config.url = "https://dz3l1w.buildship.run/groundwater";
+        window.buildShipChatWidget.config.greetingMessage = "Hi Player!!! Imagine you are a new entrant in the development sector placed in a rural Indian village, you have an exciting career ahead. But for that you have to find innovative solutions to challenges you will face in your career. Keep your answers descriptive and not just 2-4 words. When you are ready, type START and press enter.";
+        window.buildShipChatWidget.config.closeOnOutsideClick = false;
+        window.buildShipChatWidget.config.openOnLoad = true;
+        
+        // Wait until the widget is fully loaded
+        setTimeout(() => {
+            const chatInput = document.querySelector('.buildship-chat-widget .chat-input'); // Adjust the selector if necessary
 
-    <h1>Welcome to the Chat Widget</h1>
-    <p>Interact with the chat widget below:</p>
-
-    <!-- Button to open the widget -->
-    <button data-buildship-chat-widget-button></button>
-
-    <script src="https://unpkg.com/@buildshipapp/chat-widget@^1" defer></script>
-    <script>
-        window.addEventListener("load", () => {
-            window.buildShipChatWidget.config.url = "https://dz3l1w.buildship.run/groundwater";
-            window.buildShipChatWidget.config.greetingMessage = "Hi Player!!! Imagine you are a new entrant in the development sector placed in a rural Indian village, you have an exciting career ahead. But for that you have to find innovative solutions to challenges you will face in your career. Keep your answers descriptive and not just 2-4 words. When you are ready, type START and press enter.";
-            window.buildShipChatWidget.config.closeOnOutsideClick = false;
-            window.buildShipChatWidget.config.openOnLoad = true;
-
-            // Adjust scroll position when the input box is focused
-            const chatInput = document.querySelector('.buildship-chat-widget-input'); // Assuming this is the class for input field
             if (chatInput) {
                 chatInput.addEventListener('focus', () => {
+                    // Scroll the widget into view when the keyboard appears
                     setTimeout(() => {
-                        // Scroll to the input box
-                        chatInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 300); // Delay to ensure the keyboard is open
+                        chatInput.scrollIntoView({ behavior: "smooth", block: "center" });
+                    }, 300); // Timeout to allow keyboard to fully appear
+                });
+                
+                chatInput.addEventListener('blur', () => {
+                    // Optional: Handle any adjustments when the keyboard disappears
+                    // For example, you might want to scroll back to original position
+                    setTimeout(() => {
+                        window.scrollTo(0, 0); // or any other position you want
+                    }, 300);
                 });
             }
-        });
-    </script>
-</body>
-</html>
+        }, 1000); // Allow some time for the widget to initialize
+    });
+</script>
+
+<!-- Button to open the widget -->
+<button data-buildship-chat-widget-button></button>
