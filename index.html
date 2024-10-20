@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Widget</title>
+    <script src="https://unpkg.com/@buildshipapp/chat-widget@^1" defer></script>
+</head>
+<body>
+    <script>
+        window.addEventListener("load", () => {
+            window.buildShipChatWidget.config.url = "https://dz3l1w.buildship.run/groundwater";
+            window.buildShipChatWidget.config.greetingMessage = "Hi Player!!! Imagine you are a new entrant in the development sector placed in a rural Indian village, you have an exciting career ahead. But for that you have to find innovative solutions to challenges you will face in your career. Keep your answers descriptive and not just 2-4 words. When you are ready, type START and press enter.";
+            window.buildShipChatWidget.config.closeOnOutsideClick = false;
+            window.buildShipChatWidget.config.openOnLoad = true;
+        });
+    </script>
+
+    <!-- Button to open the widget -->
+    <button data-buildship-chat-widget-button>Open Chat</button>
+</body>
+</html>
