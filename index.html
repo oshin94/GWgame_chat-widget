@@ -3,40 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your GitHub Page Title</title>
+    <title>Chat Widget Example</title>
     <style>
-        /* Style for the chat widget container */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Styles for the chat button */
+        button[data-buildship-chat-widget-button] {
+            position: fixed;
+            bottom: 20px;  /* Adjust as needed */
+            right: 20px;   /* Adjust as needed */
+            z-index: 1000; /* Ensure it's above other content */
+            background-color: #007bff; /* Button color */
+            color: white; /* Button text color */
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 24px; /* Adjust size */
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            transition: background-color 0.3s;
+        }
+
+        button[data-buildship-chat-widget-button]:hover {
+            background-color: #0056b3; /* Darker on hover */
+        }
+
+        /* Responsive styling for the chat widget */
         .chat-widget-container {
-            position: fixed; /* Keep it fixed on the screen */
-            bottom: 0; /* Position it at the bottom */
-            right: 0; /* Align it to the right */
-            width: 100%; /* Full width */
-            max-width: 400px; /* Limit width for better appearance */
-            max-height: 80%; /* Limit height for scrolling */
-            overflow-y: auto; /* Enable vertical scrolling */
-            background-color: white; /* Background color */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Shadow for effect */
-            z-index: 1000; /* Make sure it appears above other content */
+            position: fixed;
+            bottom: 80px; /* Position above the button */
+            right: 20px; /* Align with button */
+            width: 300px; /* Fixed width for desktop */
+            max-width: 90%; /* Responsive max width */
+            height: 400px; /* Fixed height */
+            max-height: 70vh; /* Responsive max height */
+            overflow: hidden; /* Prevent overflow */
+            z-index: 999; /* Above other content */
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            display: none; /* Hidden initially */
+        }
+
+        /* To make the widget visible when the button is clicked */
+        .chat-widget-container.active {
+            display: block;
         }
     </style>
+    <script src="https://unpkg.com/@buildshipapp/chat-widget@^1" defer></script>
+    <script>
+        window.addEventListener("load", () => {
+            window.buildShipChatWidget.config.url = "https://dz3l1w.buildship.run/groundwater";
+            window.buildShipChatWidget.config.greetingMessage = "Hi Player!!! Imagine you are a new entrant in the development sector placed in a rural Indian village, you have an exciting career ahead. But for that you have to find innovative solutions to challenges you will face in your career. Keep your answers descriptive and not just 2-4 words. When you are ready, type START and press enter.";
+            window.buildShipChatWidget.config.closeOnOutsideClick = false;
+            window.buildShipChatWidget.config.openOnLoad = true;
+
+            // Show the widget when the button is clicked
+            const button = document.querySelector('[data-buildship-chat-widget-button]');
+            const widgetContainer = document.createElement('div');
+            widgetContainer.classList.add('chat-widget-container');
+            document.body.appendChild(widgetContainer);
+            widgetContainer.appendChild(window.buildShipChatWidget.getElement());
+
+            button.addEventListener('click', () => {
+                widgetContainer.classList.toggle('active');
+                // Scroll to the widget if it is visible
+                if (widgetContainer.classList.contains('active')) {
+                    widgetContainer.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
 </head>
 <body>
-
-    <!-- Chat Widget Container -->
-    <div class="chat-widget-container">
-        <script src="https://unpkg.com/@buildshipapp/chat-widget@^1" defer></script>
-        <script>
-            window.addEventListener("load", () => {
-                window.buildShipChatWidget.config.url = "https://dz3l1w.buildship.run/groundwater";
-                window.buildShipChatWidget.config.greetingMessage = "Hi Player!!! Imagine you are a new entrant in the development sector placed in a rural Indian village, you have an exciting career ahead. But for that you have to find innovative solutions to challenges you will face in your career. Keep your answers descriptive and not just 2-4 words. When you are ready, type START and press enter.";
-                window.buildShipChatWidget.config.closeOnOutsideClick = false;
-                window.buildShipChatWidget.config.openOnLoad = true;
-            });
-        </script>
-    </div>
-
-    <!-- Button to open the widget -->
-    <button data-buildship-chat-widget-button style="position:fixed; bottom:60px; right:20px;">Open Chat</button>
-
+    <button data-buildship-chat-widget-button>💬</button>
 </body>
 </html>
