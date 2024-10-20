@@ -3,68 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Widget Example</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file if needed -->
+    <title>GitHub Pages with Chat Widget</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Optional: Link to external CSS if needed -->
+    <script src="https://unpkg.com/@buildshipapp/chat-widget@^1" defer></script>
     <style>
-        /* Basic reset and styling */
-        body {
+        /* Basic Reset */
+        body, html {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
             font-family: Arial, sans-serif;
+            height: 100%;
+            overflow: hidden; /* Prevent scrolling body while using the chat */
+        }
+
+        /* Main Container */
+        .container {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #f0f0f0; /* Background color */
+            height: 100vh; /* Full height */
+            padding: 20px;
+            overflow: auto; /* Allow scrolling */
         }
 
-        /* Chat button styling */
-        button[data-buildship-chat-widget-button] {
-            background-color: #007bff; /* Button color */
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            position: fixed; /* Fixed positioning to keep button visible */
-            bottom: 20px; /* Position from the bottom */
-            right: 20px; /* Position from the right */
-            z-index: 1000; /* Ensure it’s on top of other content */
+        /* Chat Widget Styles */
+        .chat-widget {
+            flex: 1; /* Takes available space */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; /* Aligns the widget at the bottom */
+            position: relative; /* Allows absolute positioning for input padding */
         }
 
-        /* Responsive adjustments */
-        @media (max-width: 600px) {
-            button[data-buildship-chat-widget-button] {
-                padding: 8px 16px; /* Smaller padding on small screens */
-                font-size: 14px; /* Smaller font */
-            }
+        /* Extra padding at the bottom for mobile views */
+        .padding-bottom {
+            height: 50px; /* Height for the padding */
         }
 
-        /* Extra padding at the bottom of the body */
-        body {
-            padding-bottom: 100px; /* This extra space allows for mobile keyboard visibility */
+        /* Ensure the chat widget is responsive */
+        .buildship-chat-widget {
+            width: 100%; /* Full width */
+            max-width: 400px; /* Optional max width */
+            margin: auto; /* Center the widget */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Optional shadow */
+            background: white; /* Background color */
+            z-index: 9999; /* Ensures it stays on top */
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <h1>Welcome to the Chat</h1>
+        <p>Your main content goes here. The chat widget will stay at the bottom.</p>
+        <div class="chat-widget">
+            <div class="padding-bottom"></div> <!-- Extra space for mobile view -->
+            <div id="chat-container"></div> <!-- Container for chat widget -->
+        </div>
+    </div>
 
-    <h1>Welcome to the Chat Widget Example</h1>
-    <p>Click the button to start chatting!</p>
-
-    <script src="https://unpkg.com/@buildshipapp/chat-widget@^1" defer></script>
     <script>
         window.addEventListener("load", () => {
             window.buildShipChatWidget.config.url = "https://dz3l1w.buildship.run/groundwater";
             window.buildShipChatWidget.config.greetingMessage = "Hi Player!!! Imagine you are a new entrant in the development sector placed in a rural Indian village, you have an exciting career ahead. But for that you have to find innovative solutions to challenges you will face in your career. Keep your answers descriptive and not just 2-4 words. When you are ready, type START and press enter.";
             window.buildShipChatWidget.config.closeOnOutsideClick = false;
             window.buildShipChatWidget.config.openOnLoad = true;
+
+            // Initialize the chat widget into the designated container
+            window.buildShipChatWidget.init(document.getElementById("chat-container"));
         });
     </script>
-
-    <!-- Button to open the widget -->
-    <button data-buildship-chat-widget-button>Open Chat</button>
-
 </body>
 </html>
