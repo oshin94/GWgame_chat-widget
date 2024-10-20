@@ -50,7 +50,7 @@
 
                 if (currentHeight < originalHeight * 0.7) {
                     // If the viewport height reduces (keyboard open), reduce the chat container height
-                    chatContainer.style.height = `${currentHeight}px`;
+                    chatContainer.style.height = `${currentHeight*0.6}px`;
                 } else {
                     // Restore original height when the keyboard is closed
                     chatContainer.style.height = `100vh`;
