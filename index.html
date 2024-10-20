@@ -4,71 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat Widget</title>
-    <script src="https://unpkg.com/@buildshipapp/chat-widget@^1" defer></script>
     <style>
-        /* Basic page setup */
-        html, body {
-            height: 100%;
+        body {
+            font-family: Arial, sans-serif;
             margin: 0;
-            overflow: auto; /* Prevent double scrollbars */
+            padding: 0;
         }
 
-        #chat-container {
-            height: 100vh; /* Full viewport height */
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end; /* Ensure input stays at the bottom */
-            transition: height 0.3s ease; /* Smooth transition when resizing */
+        /* Style for the chat widget */
+        .buildship-chat-widget {
+            width: 100%; /* Full width */
+            max-height: 100%; /* Limit maximum height */
+            transition: height 0.3s ease; /* Smooth transition */
         }
 
-        button {
-            padding: 10px;
-            font-size: 16px;
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .buildship-chat-widget {
+                height: 50vh; /* 50% of viewport height */
+            }
         }
     </style>
 </head>
 <body>
-    <div id="chat-container">
-        <!-- Button to open the widget -->
-        <button data-buildship-chat-widget-button>Open Chat</button>
-    </div>
+    <h1>Welcome to Our Chat Widget</h1>
+    
+    <!-- Button to open the widget -->
+    <button data-buildship-chat-widget-button>Open Chat</button>
 
+    <script src="https://unpkg.com/@buildshipapp/chat-widget@^1" defer></script>
     <script>
-        function adjustContainerHeight() {
-            const chatContainer = document.getElementById('chat-container');
-            const newHeight = window.innerHeight;
-            chatContainer.style.height = `${newHeight}px`; // Adjust the container height to the new viewport height
-        }
-
-        function handleFocus() {
-            const chatContainer = document.getElementById('chat-container');
-            // Check if the viewport height decreased by more than a certain percentage (indicating the keyboard opened)
-            const originalHeight = window.innerHeight;
-            
-            window.addEventListener('resize', () => {
-                const currentHeight = window.innerHeight;
-
-                if (currentHeight < originalHeight * 0.7) {
-                    // If the viewport height reduces (keyboard open), reduce the chat container height
-                    chatContainer.style.height = `${currentHeight*0.6}px`;
-                } else {
-                    // Restore original height when the keyboard is closed
-                    chatContainer.style.height = `100vh`;
-                }
-            });
-        }
-
-        window.addEventListener('load', () => {
-            adjustContainerHeight(); // Adjust on page load
-            
-            // Initialize your chat widget
+        window.addEventListener("load", () => {
             window.buildShipChatWidget.config.url = "https://dz3l1w.buildship.run/groundwater";
             window.buildShipChatWidget.config.greetingMessage = "Hi Player!!! Imagine you are a new entrant in the development sector placed in a rural Indian village, you have an exciting career ahead. But for that you have to find innovative solutions to challenges you will face in your career. Keep your answers descriptive and not just 2-4 words. When you are ready, type START and press enter.";
             window.buildShipChatWidget.config.closeOnOutsideClick = false;
             window.buildShipChatWidget.config.openOnLoad = true;
-
-            // Adjust layout when keyboard is visible
-            handleFocus();
         });
     </script>
 </body>
