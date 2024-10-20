@@ -4,56 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat Widget Example</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file if needed -->
     <style>
+        /* Basic reset and styling */
         body {
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0; /* Background color */
         }
 
-        /* Styles for the chat button */
+        /* Chat button styling */
         button[data-buildship-chat-widget-button] {
-            position: fixed;
-            bottom: 20px;  /* Adjust as needed */
-            right: 20px;   /* Adjust as needed */
-            z-index: 1000; /* Ensure it's above other content */
             background-color: #007bff; /* Button color */
-            color: white; /* Button text color */
+            color: white;
             border: none;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            font-size: 24px; /* Adjust size */
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
             cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-            transition: background-color 0.3s;
+            position: fixed; /* Fixed positioning to keep button visible */
+            bottom: 20px; /* Position from the bottom */
+            right: 20px; /* Position from the right */
+            z-index: 1000; /* Ensure it’s on top of other content */
         }
 
-        button[data-buildship-chat-widget-button]:hover {
-            background-color: #0056b3; /* Darker on hover */
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            button[data-buildship-chat-widget-button] {
+                padding: 8px 16px; /* Smaller padding on small screens */
+                font-size: 14px; /* Smaller font */
+            }
         }
 
-        /* Responsive styling for the chat widget */
-        .chat-widget-container {
-            position: fixed;
-            bottom: 80px; /* Position above the button */
-            right: 20px; /* Align with button */
-            width: 300px; /* Fixed width for desktop */
-            max-width: 90%; /* Responsive max width */
-            height: 400px; /* Fixed height */
-            max-height: 70vh; /* Responsive max height */
-            overflow: hidden; /* Prevent overflow */
-            z-index: 999; /* Above other content */
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            display: none; /* Hidden initially */
-        }
-
-        /* To make the widget visible when the button is clicked */
-        .chat-widget-container.active {
-            display: block;
+        /* Extra padding at the bottom of the body */
+        body {
+            padding-bottom: 100px; /* This extra space allows for mobile keyboard visibility */
         }
     </style>
+</head>
+<body>
+
+    <h1>Welcome to the Chat Widget Example</h1>
+    <p>Click the button to start chatting!</p>
+
     <script src="https://unpkg.com/@buildshipapp/chat-widget@^1" defer></script>
     <script>
         window.addEventListener("load", () => {
@@ -61,25 +60,11 @@
             window.buildShipChatWidget.config.greetingMessage = "Hi Player!!! Imagine you are a new entrant in the development sector placed in a rural Indian village, you have an exciting career ahead. But for that you have to find innovative solutions to challenges you will face in your career. Keep your answers descriptive and not just 2-4 words. When you are ready, type START and press enter.";
             window.buildShipChatWidget.config.closeOnOutsideClick = false;
             window.buildShipChatWidget.config.openOnLoad = true;
-
-            // Show the widget when the button is clicked
-            const button = document.querySelector('[data-buildship-chat-widget-button]');
-            const widgetContainer = document.createElement('div');
-            widgetContainer.classList.add('chat-widget-container');
-            document.body.appendChild(widgetContainer);
-            widgetContainer.appendChild(window.buildShipChatWidget.getElement());
-
-            button.addEventListener('click', () => {
-                widgetContainer.classList.toggle('active');
-                // Scroll to the widget if it is visible
-                if (widgetContainer.classList.contains('active')) {
-                    widgetContainer.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
         });
     </script>
-</head>
-<body>
-    <button data-buildship-chat-widget-button>💬</button>
+
+    <!-- Button to open the widget -->
+    <button data-buildship-chat-widget-button>Open Chat</button>
+
 </body>
 </html>
